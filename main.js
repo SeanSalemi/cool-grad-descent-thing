@@ -38,7 +38,7 @@ function rot(vec, axis, angle)
 let cameraPos = { x: 0, y: 0, z: 5 };
 let cameraRot = 0;
 
-function drawPoints(points)
+function drawPoints(points, r, g, b)
 {
     for (let bp of points)
     {
@@ -68,6 +68,9 @@ function drawPoints(points)
 
             let w = 0.2 / ( (q.x - p.x) * (q.x - p.x) + (q.y - p.y) * (q.y - p.y) + (q.z - p.z) * (q.z - p.z) );
             w = min(w, 5);
+            stroke(lerp(r, 255, ((w - 1) / 4) ** 2), 
+                   lerp(g, 255, ((w - 1) / 4) ** 2),
+                   lerp(b, 255, ((w - 1) / 4) ** 2));
             strokeWeight(w  / (q.z / 2 + p.z / 2)  );
             line(x, y, x_, y_);
         }
@@ -197,8 +200,7 @@ function draw()
         };
 
 
-    stroke(0,100,255);
-    drawPoints(interpPoints);
+    drawPoints(interpPoints, 0,100,255);
 
 
     // {
@@ -211,8 +213,7 @@ function draw()
     //     }
     //     drawPoints(noiseless);
     // }
-    stroke(255,0,100);
-    drawPoints(interpPrimes);
+    drawPoints(interpPrimes, 255,0,100);
 
 
     for (let i = 0; i < 10; i++)
@@ -257,7 +258,7 @@ function draw()
             points.push({ x: Math.random() * 2 - 1, y: Math.random() * 2 - 1, z: Math.random() * 2 - 1 });
             pointsNoise[i] = { x: points[i].x, y: points[i].y, z: points[i].z };
             
-            let n = Math.random() * 0.1;
+            let n = Math.random() * 0;
 
             pointsNoise[i].x += (Math.random() * 2 - 1) * n;
             pointsNoise[i].y += (Math.random() * 2 - 1) * n;
